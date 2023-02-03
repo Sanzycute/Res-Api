@@ -3,7 +3,7 @@
 require('../settings')
 const express = require('express')
 const translate = require('translate-google')
-const alip = require("../lib/listdl")
+const sanzy = require("../lib/listdl")
 const textto = require('soundoftext-js')
 const googleIt = require('google-it')
 const { shortText } = require("limit-text-js")
@@ -78,7 +78,7 @@ async function limitapikey(apikey) {
 router.get('/api/dowloader/fbdown', cekKey, async (req, res, next) => {
 	var url = req.query.url
 	if (!url ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter url"})  
-alip.fbdown(url).then(data => {
+sanzy.fbdown(url).then(data => {
 	if (!data.Normal_video ) return res.json(loghandler.noturl)
 	limitapikey(req.query.apikey)
 	res.json({
@@ -96,7 +96,7 @@ router.get('/api/dowloader/twitter', cekKey, async (req, res, next) => {
 	var url = req.query.url
 	if (!url ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter url"})   
 	
-alip.twitter(url).then(data => {
+sanzy.twitter(url).then(data => {
 if (!data.thumb ) res.json(loghandler.noturl)
 limitapikey(req.query.apikey)
 res.json({
@@ -114,7 +114,7 @@ router.get('/api/dowloader/tikok', cekKey, async (req, res, next) => {
 	var url = req.query.url
 	if (!url ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter url"})  
 
-alip.musically(url).then(data => {
+sanzy.musically(url).then(data => {
     if (!data) return res.json(loghandler.noturl)
 	limitapikey(req.query.apikey)
 	res.json({
@@ -132,7 +132,7 @@ router.get('/api/dowloader/igdowloader', cekKey, async (req, res, next) => {
 	if (!url ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter url"})   
 	if (!/^((https|http)?:\/\/(?:www\.)?instagram\.com\/(p|tv|reel|stories)\/([^/?#&]+)).*/i.test(url)) return res.json(loghandler.noturl)
 
-	alip.igdl(url).then(async (data) => {
+	sanzy.igdl(url).then(async (data) => {
 		if (!data ) return res.json(loghandler.error) 
 		limitapikey(req.query.apikey)
 		res.json({
@@ -181,7 +181,7 @@ router.get('/api/dowloader/soundcloud', cekKey, async (req, res, next) => {
 	var url = req.query.url
 	if (!url ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter url"})   
 	
-	alip.soundcloud(url).then(data => {
+	sanzy.soundcloud(url).then(data => {
 		if (!data.download ) return res.json(loghandler.noturl)
 		limitapikey(req.query.apikey)
 		res.json({
@@ -198,7 +198,7 @@ router.get('/api/dowloader/mediafire', cekKey, async (req, res, next) => {
 	var url = req.query.url
 	if (!url ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter url"})   
 
-	alip.mediafiredl(url).then(async (data) => {
+	sanzy.mediafiredl(url).then(async (data) => {
 		if (!data ) return res.json(loghandler.noturl)
 		limitapikey(req.query.apikey)
 		res.json({
@@ -215,7 +215,7 @@ router.get('/api/dowloader/sfilemobi', cekKey, async (req, res, next) => {
 	var url = req.query.url
 	if (!url ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter url"})   
 
-	alip.sfilemobi(url).then(async (data) => {
+	sanzy.sfilemobi(url).then(async (data) => {
 		if (!data ) return res.json(loghandler.noturl)
 		limitapikey(req.query.apikey)
 		res.json({
@@ -232,7 +232,7 @@ router.get('/api/dowloader/zippyshare', cekKey, async (req, res, next) => {
 	var url = req.query.url
 	if (!url ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter url"})   
 
-	alip.zippyshare(url).then(async (data) => {
+	sanzy.zippyshare(url).then(async (data) => {
 		if (!data ) return res.json(loghandler.noturl)
 		limitapikey(req.query.apikey)
 		res.json({
@@ -250,7 +250,7 @@ router.get('/api/dowloader/telesticker', cekKey, async (req, res, next) => {
 	if (!url ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter url"})   
 	if (!url.match(/(https:\/\/t.me\/addstickers\/)/gi)) return res.json(loghandler.noturl)
 	
-	alip.telesticker(url).then(data => {
+	sanzy.telesticker(url).then(data => {
 		limitapikey(req.query.apikey)
 		res.json({
 			status: true,
@@ -268,7 +268,7 @@ router.get('/api/dowloader/telesticker', cekKey, async (req, res, next) => {
 router.get('/api/textpro/pencil', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.textpro("https://textpro.me/create-a-sketch-text-effect-online-1044.html", [text1])
+	sanzy.textpro("https://textpro.me/create-a-sketch-text-effect-online-1044.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -283,7 +283,7 @@ router.get('/api/textpro/pencil', cekKey, async (req, res, next) => {
 router.get('/api/textpro/glitch', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.textpro("https://textpro.me/create-impressive-glitch-text-effects-online-1027.html", [text1])
+	sanzy.textpro("https://textpro.me/create-impressive-glitch-text-effects-online-1027.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -298,7 +298,7 @@ router.get('/api/textpro/glitch', cekKey, async (req, res, next) => {
 router.get('/api/textpro/blackpink', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.textpro("https://textpro.me/create-blackpink-logo-style-online-1001.html", [text1])
+	sanzy.textpro("https://textpro.me/create-blackpink-logo-style-online-1001.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -313,7 +313,7 @@ router.get('/api/textpro/blackpink', cekKey, async (req, res, next) => {
 router.get('/api/textpro/berry', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.textpro("https://textpro.me/create-berry-text-effect-online-free-1033.html", [text1])
+	sanzy.textpro("https://textpro.me/create-berry-text-effect-online-free-1033.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -328,7 +328,7 @@ router.get('/api/textpro/berry', cekKey, async (req, res, next) => {
 router.get('/api/textpro/neon', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.textpro("https://textpro.me/neon-light-text-effect-online-882.html", [text1])
+	sanzy.textpro("https://textpro.me/neon-light-text-effect-online-882.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -344,7 +344,7 @@ router.get('/api/textpro/neon', cekKey, async (req, res, next) => {
 router.get('/api/textpro/logobear', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.textpro("https://textpro.me/online-black-and-white-bear-mascot-logo-creation-1012.html", [text1])
+	sanzy.textpro("https://textpro.me/online-black-and-white-bear-mascot-logo-creation-1012.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -359,7 +359,7 @@ router.get('/api/textpro/logobear', cekKey, async (req, res, next) => {
 router.get('/api/textpro/3dchristmas', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.textpro("https://textpro.me/3d-christmas-text-effect-by-name-1055.html", [text1])
+	sanzy.textpro("https://textpro.me/3d-christmas-text-effect-by-name-1055.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -374,7 +374,7 @@ router.get('/api/textpro/3dchristmas', cekKey, async (req, res, next) => {
 router.get('/api/textpro/thunder', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.textpro("https://textpro.me/online-thunder-text-effect-generator-1031.html", [text1])
+	sanzy.textpro("https://textpro.me/online-thunder-text-effect-generator-1031.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -389,7 +389,7 @@ router.get('/api/textpro/thunder', cekKey, async (req, res, next) => {
 router.get('/api/textpro/3dboxtext', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.textpro("https://textpro.me/3d-box-text-effect-online-880.html", [text1])
+	sanzy.textpro("https://textpro.me/3d-box-text-effect-online-880.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -406,7 +406,7 @@ router.get('/api/textpro/glitch2', cekKey, async (req, res, next) => {
 	var text2 = req.query.text2
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
 	if (!text2 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text2"}) 
-	alip.textpro("https://textpro.me/create-a-glitch-text-effect-online-free-1026.html", [text1,text2])
+	sanzy.textpro("https://textpro.me/create-a-glitch-text-effect-online-free-1026.html", [text1,text2])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -422,7 +422,7 @@ router.get('/api/textpro/glitchtiktok', cekKey, async (req, res, next) => {
 	var text2 = req.query.text2
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
 	if (!text2 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text2"}) 
-	alip.textpro("https://textpro.me/create-glitch-text-effect-style-tik-tok-983.html", [text1,text2])
+	sanzy.textpro("https://textpro.me/create-glitch-text-effect-style-tik-tok-983.html", [text1,text2])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -438,7 +438,7 @@ router.get('/api/textpro/video-game-classic', cekKey, async (req, res, next) => 
 	var text2 = req.query.text2
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
 	if (!text2 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text2"}) 
-	alip.textpro("https://textpro.me/video-game-classic-8-bit-text-effect-1037.html", [text1,text2])
+	sanzy.textpro("https://textpro.me/video-game-classic-8-bit-text-effect-1037.html", [text1,text2])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -454,7 +454,7 @@ router.get('/api/textpro/marvel-studios', cekKey, async (req, res, next) => {
 	var text2 = req.query.text2
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
 	if (!text2 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text2"}) 
-	alip.textpro("https://textpro.me/create-logo-style-marvel-studios-online-971.html", [text1,text2])
+	sanzy.textpro("https://textpro.me/create-logo-style-marvel-studios-online-971.html", [text1,text2])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -470,7 +470,7 @@ router.get('/api/textpro/ninja-logo', cekKey, async (req, res, next) => {
 	var text2 = req.query.text2
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
 	if (!text2 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text2"}) 
-	alip.textpro("https://textpro.me/create-ninja-logo-online-935.html", [text1,text2])
+	sanzy.textpro("https://textpro.me/create-ninja-logo-online-935.html", [text1,text2])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -484,7 +484,7 @@ router.get('/api/textpro/ninja-logo', cekKey, async (req, res, next) => {
 router.get('/api/textpro/green-horror', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.textpro("https://textpro.me/create-green-horror-style-text-effect-online-1036.html", [text1])
+	sanzy.textpro("https://textpro.me/create-green-horror-style-text-effect-online-1036.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -498,7 +498,7 @@ router.get('/api/textpro/green-horror', cekKey, async (req, res, next) => {
 router.get('/api/textpro/magma', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.textpro("https://textpro.me/create-a-magma-hot-text-effect-online-1030.html", [text1])
+	sanzy.textpro("https://textpro.me/create-a-magma-hot-text-effect-online-1030.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -512,7 +512,7 @@ router.get('/api/textpro/magma', cekKey, async (req, res, next) => {
 router.get('/api/textpro/3d-neon-light', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.textpro("https://textpro.me/create-3d-neon-light-text-effect-online-1028.html", [text1])
+	sanzy.textpro("https://textpro.me/create-3d-neon-light-text-effect-online-1028.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -526,7 +526,7 @@ router.get('/api/textpro/3d-neon-light', cekKey, async (req, res, next) => {
 router.get('/api/textpro/3d-orange-juice', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.textpro("https://textpro.me/create-a-3d-orange-juice-text-effect-online-1084.html", [text1])
+	sanzy.textpro("https://textpro.me/create-a-3d-orange-juice-text-effect-online-1084.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -540,7 +540,7 @@ router.get('/api/textpro/3d-orange-juice', cekKey, async (req, res, next) => {
 router.get('/api/textpro/chocolate-cake', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.textpro("https://textpro.me/chocolate-cake-text-effect-890.html", [text1])
+	sanzy.textpro("https://textpro.me/chocolate-cake-text-effect-890.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -554,7 +554,7 @@ router.get('/api/textpro/chocolate-cake', cekKey, async (req, res, next) => {
 router.get('/api/textpro/strawberry', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.textpro("https://textpro.me/strawberry-text-effect-online-889.html", [text1])
+	sanzy.textpro("https://textpro.me/strawberry-text-effect-online-889.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -571,7 +571,7 @@ router.get('/api/textpro/strawberry', cekKey, async (req, res, next) => {
 router.get('/api/photooxy/flaming', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.photooxy("https://photooxy.com/logo-and-text-effects/realistic-flaming-text-effect-online-197.html", [text1])
+	sanzy.photooxy("https://photooxy.com/logo-and-text-effects/realistic-flaming-text-effect-online-197.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -586,7 +586,7 @@ router.get('/api/photooxy/flaming', cekKey, async (req, res, next) => {
 router.get('/api/photooxy/shadow-sky', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.photooxy("https://photooxy.com/logo-and-text-effects/shadow-text-effect-in-the-sky-394.html", [text1])
+	sanzy.photooxy("https://photooxy.com/logo-and-text-effects/shadow-text-effect-in-the-sky-394.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -601,7 +601,7 @@ router.get('/api/photooxy/shadow-sky', cekKey, async (req, res, next) => {
 router.get('/api/photooxy/metallic', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.photooxy("https://photooxy.com/other-design/create-metallic-text-glow-online-188.html", [text1])
+	sanzy.photooxy("https://photooxy.com/other-design/create-metallic-text-glow-online-188.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -616,7 +616,7 @@ router.get('/api/photooxy/metallic', cekKey, async (req, res, next) => {
 router.get('/api/photooxy/naruto', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.photooxy("https://photooxy.com/manga-and-anime/make-naruto-banner-online-free-378.html", [text1])
+	sanzy.photooxy("https://photooxy.com/manga-and-anime/make-naruto-banner-online-free-378.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -633,7 +633,7 @@ router.get('/api/photooxy/pubg', cekKey, async (req, res, next) => {
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
 	var text2 = req.query.text2
 	if (!text2 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text2"})  
-	alip.photooxy("https://photooxy.com/battlegrounds/make-wallpaper-battlegrounds-logo-text-146.html", [text1,text2])
+	sanzy.photooxy("https://photooxy.com/battlegrounds/make-wallpaper-battlegrounds-logo-text-146.html", [text1,text2])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -647,7 +647,7 @@ router.get('/api/photooxy/pubg', cekKey, async (req, res, next) => {
 router.get('/api/photooxy/under-grass', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.photooxy("https://photooxy.com/logo-and-text-effects/make-quotes-under-grass-376.html", [text1])
+	sanzy.photooxy("https://photooxy.com/logo-and-text-effects/make-quotes-under-grass-376.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -661,7 +661,7 @@ router.get('/api/photooxy/under-grass', cekKey, async (req, res, next) => {
 router.get('/api/photooxy/harry-potter', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.photooxy("https://photooxy.com/logo-and-text-effects/create-harry-potter-text-on-horror-background-178.html", [text1])
+	sanzy.photooxy("https://photooxy.com/logo-and-text-effects/create-harry-potter-text-on-horror-background-178.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -675,7 +675,7 @@ router.get('/api/photooxy/harry-potter', cekKey, async (req, res, next) => {
 router.get('/api/photooxy/flower-typography', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.photooxy("https://photooxy.com/art-effects/flower-typography-text-effect-164.html", [text1])
+	sanzy.photooxy("https://photooxy.com/art-effects/flower-typography-text-effect-164.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -689,7 +689,7 @@ router.get('/api/photooxy/flower-typography', cekKey, async (req, res, next) => 
 router.get('/api/photooxy/picture-of-love', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.photooxy("https://photooxy.com/logo-and-text-effects/create-a-picture-of-love-message-377.html", [text1])
+	sanzy.photooxy("https://photooxy.com/logo-and-text-effects/create-a-picture-of-love-message-377.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -703,7 +703,7 @@ router.get('/api/photooxy/picture-of-love', cekKey, async (req, res, next) => {
 router.get('/api/photooxy/coffee-cup', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.photooxy("https://photooxy.com/logo-and-text-effects/put-any-text-in-to-coffee-cup-371.html", [text1])
+	sanzy.photooxy("https://photooxy.com/logo-and-text-effects/put-any-text-in-to-coffee-cup-371.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -717,7 +717,7 @@ router.get('/api/photooxy/coffee-cup', cekKey, async (req, res, next) => {
 router.get('/api/photooxy/butterfly', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.photooxy("https://photooxy.com/logo-and-text-effects/butterfly-text-with-reflection-effect-183.html", [text1])
+	sanzy.photooxy("https://photooxy.com/logo-and-text-effects/butterfly-text-with-reflection-effect-183.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -731,7 +731,7 @@ router.get('/api/photooxy/butterfly', cekKey, async (req, res, next) => {
 router.get('/api/photooxy/night-sky', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.photooxy("https://photooxy.com/logo-and-text-effects/write-stars-text-on-the-night-sky-200.html", [text1])
+	sanzy.photooxy("https://photooxy.com/logo-and-text-effects/write-stars-text-on-the-night-sky-200.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -746,7 +746,7 @@ router.get('/api/photooxy/night-sky', cekKey, async (req, res, next) => {
 router.get('/api/photooxy/carved-wood', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.photooxy("https://photooxy.com/logo-and-text-effects/carved-wood-effect-online-171.html", [text1])
+	sanzy.photooxy("https://photooxy.com/logo-and-text-effects/carved-wood-effect-online-171.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -761,7 +761,7 @@ router.get('/api/photooxy/carved-wood', cekKey, async (req, res, next) => {
 router.get('/api/photooxy/illuminated-metallic', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.photooxy("https://photooxy.com/logo-and-text-effects/illuminated-metallic-effect-177.html", [text1])
+	sanzy.photooxy("https://photooxy.com/logo-and-text-effects/illuminated-metallic-effect-177.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -775,7 +775,7 @@ router.get('/api/photooxy/illuminated-metallic', cekKey, async (req, res, next) 
 router.get('/api/photooxy/sweet-candy', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.photooxy("https://photooxy.com/logo-and-text-effects/sweet-andy-text-online-168.html", [text1])
+	sanzy.photooxy("https://photooxy.com/logo-and-text-effects/sweet-andy-text-online-168.html", [text1])
 .then((data) =>{ 
 	limitapikey(req.query.apikey)
 	res.set({'Content-Type': 'image/png'})
@@ -816,7 +816,7 @@ textto.sounds.create({ text: text1, voice: lan })
 router.get('/api/search/linkgroupwa', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-alip.linkwa(text1).then((data) =>{ 
+sanzy.linkwa(text1).then((data) =>{ 
 	if (!data[0] ) return res.json(loghandler.notfound)
 	limitapikey(req.query.apikey)
     res.json({
@@ -832,7 +832,7 @@ alip.linkwa(text1).then((data) =>{
 router.get('/api/search/pinterest', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-alip.pinterest(text1).then((data) =>{ 
+sanzy.pinterest(text1).then((data) =>{ 
 	if (!data[0] ) return res.json(loghandler.notfound)
 	limitapikey(req.query.apikey)
     res.json({
@@ -849,7 +849,7 @@ alip.pinterest(text1).then((data) =>{
 router.get('/api/search/ringtone', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.ringtone(text1).then((data) =>{ 
+	sanzy.ringtone(text1).then((data) =>{ 
 	if (!data ) return res.json(loghandler.notfound)
 	limitapikey(req.query.apikey)
     res.json({
@@ -866,7 +866,7 @@ router.get('/api/search/ringtone', cekKey, async (req, res, next) => {
 router.get('/api/search/wikimedia', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-alip.wikimedia(text1).then((data) =>{ 
+sanzy.wikimedia(text1).then((data) =>{ 
 	if (!data[0] ) return res.json(loghandler.notfound)
 	limitapikey(req.query.apikey)
     res.json({
@@ -883,7 +883,7 @@ alip.wikimedia(text1).then((data) =>{
 router.get('/api/search/wallpaper', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.wallpaper(text1).then((data) =>{ 
+	sanzy.wallpaper(text1).then((data) =>{ 
 	if (!data[0] ) return res.json(loghandler.notfound)
 	limitapikey(req.query.apikey)
    res.json({
@@ -978,7 +978,7 @@ limitapikey(req.query.apikey)
 router.get('/api/search/sticker', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.stickersearch(text1).then(data => {
+	sanzy.stickersearch(text1).then(data => {
 		if (!data ) return res.json(loghandler.notfound)
 		limitapikey(req.query.apikey)
 		res.json({
@@ -994,7 +994,7 @@ router.get('/api/search/sticker', cekKey, async (req, res, next) => {
 router.get('/api/search/sfilemobi', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})   
-	alip.sfilemobiSearch(text1).then(data => {
+	sanzy.sfilemobiSearch(text1).then(data => {
 		if (!data ) return res.json(loghandler.notfound)
 		limitapikey(req.query.apikey)
 		res.json({
@@ -1047,7 +1047,7 @@ router.get('/api/randomgambar/coffee', cekKey, async (req, res, next) => {
 // Game
 
 router.get('/api/game/tembakgambar', cekKey, async (req, res, next) => {
- alip.tebakgambar().then((data) =>{ 
+ sanzy.tebakgambar().then((data) =>{ 
 	limitapikey(req.query.apikey)	  
   res.json({
 	status: true,
@@ -1683,7 +1683,7 @@ router.get('/api/info/githubstalk', cekKey, async (req, res, next) => {
 })
 
 router.get('/api/info/waktuksolatmy', cekKey, async (req, res, next) => {
-	alip.watuksolatmy()
+	sanzy.watuksolatmy()
 	.then(data => {
 		if (!data.Tarikh ) return res.json(loghandler.error)
 		limitapikey(req.query.apikey)
@@ -1808,7 +1808,7 @@ router.get('/api/tools/ssweb', cekKey, async (req, res, next) => {
 	if (!islink ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter url sahaja"})  
 
 
-	alip.ssweb(link).then((data) =>{ 
+	sanzy.ssweb(link).then((data) =>{ 
 		limitapikey(req.query.apikey)
 		if (!data ) return res.json(loghandler.notfound)
 		res.set({'Content-Type': 'image/png'})
@@ -1824,7 +1824,7 @@ router.get('/api/tools/styletext', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text "}) 
 	var text = shortText(text1, 10000)  
-	alip.styletext(text)
+	sanzy.styletext(text)
 .then((data) =>{ 
 	if (!data ) return res.json(loghandler.error)
 	limitapikey(req.query.apikey)
@@ -1847,7 +1847,7 @@ router.get('/api/tools/styletext', cekKey, async (req, res, next) => {
 router.get('/api/islamic/surah', cekKey, async (req, res, next) => {
 	var text1 = req.query.no
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter no"})  
-	alip.surah(text1).then((data) =>{ 
+	sanzy.surah(text1).then((data) =>{ 
 	if (!data ) return res.json(loghandler.notfound)
 	limitapikey(req.query.apikey)
 		res.json({
@@ -1865,7 +1865,7 @@ router.get('/api/islamic/surah', cekKey, async (req, res, next) => {
 router.get('/api/islamic/tafsirsurah', cekKey, async (req, res, next) => {
 	var text1 = req.query.text
 	if (!text1 ) return res.json({ status : false, creator : `${creator}`, message : "[!] masukan parameter text"})  
-	alip.tafsirsurah(text1).then((data) =>{ 
+	sanzy.tafsirsurah(text1).then((data) =>{ 
 	if (!data[0] ) return res.json(loghandler.notfound)
 	limitapikey(req.query.apikey)
 		res.json({
