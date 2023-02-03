@@ -127,7 +127,7 @@ app.listen(port, () => {
    ██╔══██║██╔═══╝ ██║    ██╔══██║██║     ██╔═══╝ ██║╚════██║
    ██║  ██║██║     ██║    ██║  ██║███████╗██║     ██║███████║
    ╚═╝  ╚═╝╚═╝     ╚═╝    ╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝╚══════╝ V2 
-			                           @alipje29
+			                           @Sanzy
 								 
 Server running on http://localhost:` + port)
 console.log(`Hello ${creator}`)
